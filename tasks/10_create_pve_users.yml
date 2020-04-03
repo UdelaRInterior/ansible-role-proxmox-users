@@ -1,0 +1,13 @@
+---
+# Creation of Proxmox users using Proxmox cli tools
+
+- name: Check if the user exists in Proxmox
+  command: pveum usermod "{{ pve_user.username }}"@pam
+  register: pve_mod_user
+  ignore_errors: yes
+
+- name: Create the user account in Proxmox
+  command: pveum useradd "{{ pve_user.username }}"@pam -comment "{{ pve_user.name }}"
+  when: pve_mod_user.rc != 0
+
+...

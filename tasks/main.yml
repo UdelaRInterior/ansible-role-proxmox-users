@@ -1,0 +1,27 @@
+---
+# tasks file for ansible-role-proxmox-users
+
+- name: Acceso admin consola proxmox
+  block:
+
+  - name: Add Proxmox users
+    include_tasks: 10_create_pve_users.yml
+    loop: '{{ pve_users }}'
+    loop_control:
+      loop_var: pve_user
+
+  - name: Add Proxmox groups
+    include_tasks: 20_create_pve_groups.yml
+    loop: '{{ pve_groups }}'
+    loop_control:
+      loop_var: pve_group
+
+  - name: Add Proxmox permissions
+    include_tasks: 30_create_pve_permissions.yml
+    loop: '{{ pve_permissions }}'
+    loop_control:
+      loop_var: pve_permission
+
+  run_once: true
+  # Se corre en un solo nodo del cluster
+...

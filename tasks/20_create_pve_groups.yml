@@ -1,0 +1,20 @@
+---
+# Create Proxmox groups using cli tools
+
+- name: Check if the group exists in Proxmox
+  command: pveum groupmod "{{ pve_group.name }}"
+  register: mod_adminsys
+  ignore_errors: yes
+
+- name: Create the Proxmox group 
+  command: pveum groupadd "{{ pve_group.name }}" -comment "{{ pve_group.comment }}"
+  when: mod_adminsys.rc != 0
+
+- name: Add user members to the Proxmox group
+  command: pveum usermod "{{ member }}"@pam -group "{{ pve_group.name }}"
+  ignore_errors: yes
+  loop: "{{ pve_group.members }}"
+  loop_control:
+    loop_var: member
+
+...

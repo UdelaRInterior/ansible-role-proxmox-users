@@ -1,0 +1,14 @@
+---
+# Grant permissions to users and groups in Proxmox
+
+- name: Grant permissions on a Proxmox path to a user with a given role
+  command: pveum aclmod  "{{ pve_permission.path }}" -user "{{ pve_permission.user }}" -role "{{ pve_permission.role }}"
+  ignore_errors: yes
+  when: pve_permission.user is defined
+
+- name: Grant permissions on a Proxmox path to a group with a given role
+  command: pveum aclmod  "{{ pve_permission.path }}" -group "{{ pve_permission.group }}" -role "{{ pve_permission.role }}"
+  ignore_errors: yes
+  when: pve_permission.group is defined
+
+...

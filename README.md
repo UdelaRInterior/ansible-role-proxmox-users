@@ -20,9 +20,9 @@ Role Variables
 `pve_permissions` is a list of the following dict structure: 
 ```yaml
 - path: <proxmox_datacenter_path>
-- user: <user> (and no "group:" defined)
-- group: <group> (and no "user:" defined)
-- role: <proxmox role>
+  user: <user> (and no "group:" defined)
+  group: <group> (and no "user:" defined)
+  role: <proxmox role>
 ```
 Either the key `user:` or the the key `group` must be defined, not both. 
 

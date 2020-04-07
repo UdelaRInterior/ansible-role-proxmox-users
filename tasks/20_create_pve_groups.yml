@@ -7,11 +7,11 @@
   ignore_errors: yes
 
 - name: Create the Proxmox group 
-  command: pveum groupadd "{{ pve_group.name }}" -comment "{{ pve_group.comment }}"
+  command: pveum groupadd "{{ pve_group.name }}" -comment "{{ pve_group.comment | default ( omit ) }}"
   when: mod_adminsys.rc != 0
 
 - name: Add user members to the Proxmox group
-  command: pveum usermod "{{ member }}"@pam -group "{{ pve_group.name }}"
+  command: pveum usermod "{{ member }}"@pam -group "{{ pve_group.name }}" --append yes
   ignore_errors: yes
   loop: "{{ pve_group.members }}"
   loop_control:

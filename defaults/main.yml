@@ -16,15 +16,19 @@ pve_default_groups:
   members:
   - user1
   - user2
-- name: group1
+- name: group2
   comment: Group Two
   members:
   - user2
   - user3
 
 pve_users: '{{ users | default ( pve_default_users ) }}'
-pve_groups: '{{ os_groups | | default ( pve_default_groups ) }}'
+pve_groups: '{{ os_groups | default ( pve_default_groups ) }}'
 pve_permissions: 
 - path: /
-  user_group: "@group1"
+  user: user3
+  role: Administrator
+
+- path: /
+  group: group1
   role: Administrator

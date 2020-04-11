@@ -4,11 +4,14 @@
 pve_default_users:
 - username: user1
   name: User One
+  email: user1@domain.org
+  firstname: User
+  lastname: One 
 - username: user2
   name: User Two
+  expire: 8600   # in seconds
 - username: user3
   name: User Three
-
 
 pve_default_groups:
 - name: group1

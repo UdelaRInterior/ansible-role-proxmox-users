@@ -7,7 +7,26 @@
   ignore_errors: yes
 
 - name: Create the user account in Proxmox
-  command: pveum useradd "{{ pve_user.username }}"@pam -comment "{{ pve_user.name }}"
+  command: >
+     pveum useradd "{{ pve_user.username }}"@pam 
+     -enable "{{ pve_user.enable | default( 1 ) }}"
+     -expire "{{ pve_user.expire | default( 0 ) }}"
   when: pve_mod_user.rc != 0
+
+- name: Add conmment/name to the user account in Proxmox
+  command: pveum usermod "{{ pve_user.username }}"@pam -comment "{{ pve_user.name }}" 
+  when: pve_user.name is defined
+
+- name: Add email to the user account in Proxmox
+  command: pveum usermod "{{ pve_user.username }}"@pam -email "{{ pve_user.email }}"
+  when: pve_user.email is defined
+
+- name: Add first name to the user account in Proxmox
+  command: pveum usermod "{{ pve_user.username }}"@pam -firstname "{{ pve_user.firstname }}"
+  when: pve_user.firstname is defined
+
+- name: Add last name to the user account in Proxmox
+  command: pveum usermod "{{ pve_user.username }}"@pam -lastname "{{ pve_user.lastname }}"
+  when: pve_user.lastname is defined
 
 ...
